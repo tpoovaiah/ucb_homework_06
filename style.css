@@ -1,0 +1,18 @@
+.heading {
+    text-align: center;
+    font-size: 30px;
+    background-color: darkslategray;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.card-body {
+    background-color: rgb(38, 107, 255);
+}
