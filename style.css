@@ -13,6 +13,17 @@
     padding-bottom: 30px;
 }
 
+.card {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 .card-body {
     background-color: rgb(38, 107, 255);
+}
+
+.nameClick {
+    background-color: lightgray;
+    padding: 5px
+
 }
