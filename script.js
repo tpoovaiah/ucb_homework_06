@@ -16,7 +16,7 @@ $(document).ready(function(){
 
             //creates jumbotron data
             var iconurl = "http://openweathermap.org/img/w/" + forecastData.list[0].weather[0].icon + ".png";
-            $("#city").text(queryTerm);
+            $("#city").text(queryTerm + " (" + moment().format('L') + ")");
             $("#icon").attr("src", iconurl)
             $("#temp").text("Temperature: " + parseInt((forecastData.list[0].main.temp - 273.15) * 1.80 + 32)+"°F");
             $("#humidity").text("Humidity: " + forecastData.list[0].main.humidity + "%")
@@ -25,14 +25,10 @@ $(document).ready(function(){
 
             var lat = forecastData.city.coord.lat
             var lon = forecastData.city.coord.lon
-
-
-            
             var newUVURL = uvURLBase + "&lat=" + lat + "&lon=" + lon
-            console.log("new URL", newUVURL)
 
 
-
+            //calculates UVI
             function runUV(queryURL){
 
                 $.ajax({
@@ -42,32 +38,23 @@ $(document).ready(function(){
                 .then(function(uvData){
                     
                     var uv = uvData.value
-                    console.log("uv", uv)
+
                     
                     if (uv<2){
                         $("#uv").text("UV Index: " + uv).addClass("low")
                     }
-        
                     else if (uv>5){
                         $("#uv").text("UV Index: " + uv).addClass("high")
                     }
-
                     else if (2<uv<5){
                         $("#uv").text("UV Index: " + uv).addClass("med")
                     }
-                    
-                    
-        
                 })
             }
             runUV(newUVURL);
 
 
-
-
             
-
-
             //creates forecast cards
             for (var i=0; i<40; i+=8) {
                 
@@ -88,8 +75,6 @@ $(document).ready(function(){
         })
     }
 
-    
-
 
     //populates the city list
     function addCities() {
@@ -97,14 +82,13 @@ $(document).ready(function(){
         $("#cityList").empty();
         for (var i = 0; i < searches.length; i++) {
             var element = searches[i];
-            var cityDiv = $("<div>").text(element).addClass("well").attr("data-city", element)
+            var cityDiv = $("<button>").text(element).addClass("well btn btn-block").attr("data-city", element).attr("type", "button")            
 
             $("#cityList").append(cityDiv)
-            
         }
     }
 
-
+    //when Search is clicked
     $("#search").on("click", function(){
         event.preventDefault();
         $("#forecast").empty();
@@ -121,12 +105,18 @@ $(document).ready(function(){
 
     })
 
+    //when City in list is clicked
+    $(".well").on("click", function(){
+
+        var newURL = queryURLBase + "&q=" + this.val()
+        console.log("newURL", newURL)
+    
+        runQuery(newURL);
+    })
+
    
 addCities();
     
-
-
-//@2px.png
 
 
 
