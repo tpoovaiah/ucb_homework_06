@@ -1,5 +1,7 @@
 #box {
-    margin: 150px;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: auto;
 }
 
 .heading {
@@ -42,4 +44,15 @@
 
 #icon {
     display: inline-block;
+}
+.low {
+    background-color: green;
+}
+
+.med {
+    background-color: yellow;
+}
+
+.high {
+    background-color: red;
 }
