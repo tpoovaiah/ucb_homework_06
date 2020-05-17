@@ -1,3 +1,7 @@
+#box {
+    margin: 150px;
+}
+
 .heading {
     text-align: center;
     font-size: 30px;
@@ -18,10 +22,6 @@
     margin-right: 10px;
 }
 
-.card-body {
-    background-color: rgb(38, 107, 255);
-}
-
 .nameClick {
     background-color: lightgray;
     padding: 5px
@@ -30,4 +30,16 @@
 
 .well {
     text-transform: capitalize;
+    font-weight: bold;
+    background-color: lightgray;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
+#city {
+    text-transform: capitalize;
+}
+
+#icon {
+    display: inline-block;
 }

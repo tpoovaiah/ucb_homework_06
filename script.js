@@ -11,70 +11,39 @@ $(document).ready(function(){
             method: "GET"
         })
         .then(function(forecastData){
-            // console.log( "queryURL",queryURL);
             console.log("forecastData", forecastData);
-            // console.log("numForecast", numForecast)
 
 
-            // var iconurl = "http://openweathermap.org/img/w/" + forecastData.list[0].weather[0].icon + ".png";
+            var iconurl = "http://openweathermap.org/img/w/" + forecastData.list[0].weather[0].icon + ".png";
             
-            // var card = $("<div>").addClass("card")
-            // var cardTitle = $("<div>").addClass("card-title").text(forecastData.list[0].dt_txt)
-            // var cardIcon = $("<img>").attr("src", iconurl)
-            // var cardBody = $("<div>").addClass("card-body")
-            // cardBody.append(cardIcon)
-            // card.append(cardTitle, cardBody)
-            // $("#jumbotron").append(card)
+
+            $("#city").text(queryTerm);
+            $("#icon").attr("src", iconurl)
+            $("#temp").text("Temperature: " + parseInt((forecastData.list[0].main.temp - 273.15) * 1.80 + 32)+"°F");
+            $("#humidity").text("Humidity: " + forecastData.list[0].main.humidity + "%")
+            $("#windspeed").text("Windspeed: " + forecastData.list[0].wind.speed + " MPH");
 
 
 
             for (var i=0; i<40; i+=8) {
                 
-                //console.log(parseInt((forecastData.list[i].main.temp - 273.15) * 1.80 + 32));
-
                 var iconurl = "http://openweathermap.org/img/w/" + forecastData.list[i].weather[0].icon + ".png";
             
-
-
-                var card = $("<div>").addClass("card")
-                var cardTitle = $("<div>").addClass("card-title").text(forecastData.list[i].dt_txt)
-                var cardIcon = $("<img>").attr("src", iconurl)
-                var cardBody = $("<div>").addClass("card-body")
-                cardBody.append(cardIcon)
+                var card = $("<div>").addClass("card text-white bg-info");
+                var cardTitle = $("<div>").addClass("card-title").text(forecastData.list[i].dt_txt);
+                var cardIcon = $("<img>").attr("src", iconurl);
+                var cardBody = $("<div>").addClass("card-body");
+                var temp = $("<p>").text("Temp: " + parseInt((forecastData.list[i].main.temp - 273.15) * 1.80 + 32)+"°F");
+                var humidity = $("<p>").text("Humidity: " + forecastData.list[i].main.humidity + "%")
+                
+                cardBody.append(cardIcon, temp, humidity)
                 card.append(cardTitle, cardBody)
                 $("#forecast").append(card)
 
-
-
-                // $("#day1").find(".card-title").text(forecastData.list[1].dt_txt)
-                // $("#day1").find(".card-title").text(forecastData.list[1].dt_txt)
-                // $("#day1").find(".card-title").text(forecastData.list[1].dt_txt)
-
             }
 
-            //var currentTempF = parseInt((forecastData.list[0].main.temp - 273.15) * 1.80 + 32);
-
-            //console.log("temp", currentTempF)
         })
     }
-
-
-    $("#search").on("click", function(){
-        event.preventDefault()
-        $("#forecast").empty();
-        queryTerm = $("#cityName").val().toLowerCase().trim();
-        var searches = JSON.parse(localStorage.getItem("cities")) || [];
-        searches.push(queryTerm)
-        localStorage.setItem("cities", JSON.stringify(searches))
-        var newURL = queryURLBase + "&q=" + queryTerm
-
-
-        addCities();
-
-        runQuery(newURL);
-
-
-    })
 
     function addCities() {
         var searches = JSON.parse(localStorage.getItem("cities")) || [];
@@ -88,22 +57,28 @@ $(document).ready(function(){
         }
     }
 
-addCities();
-    // var cityInput = //source the city name from the result of the ajax query
 
+    $("#search").on("click", function(){
+        event.preventDefault();
+        $("#forecast").empty();
+        queryTerm = $("#cityName").val().toLowerCase().trim();
+        var searches = JSON.parse(localStorage.getItem("cities")) || [];
+        searches.push(queryTerm)
+        localStorage.setItem("cities", JSON.stringify(searches))
+        var newURL = queryURLBase + "&q=" + queryTerm
 
-    // var cities = []
+        runQuery(newURL);
+        addCities();
 
-
-//@2px.png
+    })
 
     
 
+addCities();
+    
 
 
-
-
-
+//@2px.png
 
 
 
